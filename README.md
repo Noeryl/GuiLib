@@ -1,2 +1,2 @@
 # GuiLib
-Gui (forms, scoreboards, bossbars, fake, inventories) library for PMMP
+Gui (forms, scoreboards, bossbars, fake inventories) library based on OOP for PocketMine-MP
