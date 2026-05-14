@@ -12,7 +12,7 @@ use function preg_match;
 abstract class SimpleForm extends BaseForm{
 
     /** @var array<int, mixed> */
-    private array $values;
+    private array $values = [];
 
     public function __construct(Player $player){
         parent::__construct($player);
