@@ -2,10 +2,9 @@
 
 declare(strict_types = 1);
 
-namespace guilib\form\types;
+namespace guilib\form;
 
 use pocketmine\player\Player;
-use guilib\form\BaseForm;
 use function is_int;
 use function preg_match;
 
@@ -17,27 +16,27 @@ abstract class SimpleForm extends BaseForm{
     public function __construct(Player $player){
         parent::__construct($player);
 
-        $this->data["content"] = $this->getContent($player);
+        $this->data['content'] = $this->getContent($player);
         foreach($this->getButtons($player) as $button){
-            $text = $button[0] ?? "null";
+            $text = $button[0] ?? 'null';
             $image = $button[1] ?? null;
             $value = $button[2] ?? null;
 
-            $btn = ["text" => $text];
+            $b = ['text' => $text];
             if(!empty($image)){
-                $btn["image"] = [
-                    "type" => preg_match("/^https?:\/\//i", $image) ? "url" : "path",
-                    "data" => $image
+                $b['image'] = [
+                    'type' => preg_match('/^https?:\/\//i', $image) ? 'url' : 'path',
+                    'data' => $image
                 ];
             }
 
             $this->values[] = $value;
-            $this->data["buttons"][] = $btn;
+            $this->data['buttons'][] = $b;
         }
     }
 
     final protected function getType() : string{
-        return "form";
+        return 'form';
     }
 
     final public function handleResponse(Player $player, mixed $data) : void{
@@ -53,7 +52,7 @@ abstract class SimpleForm extends BaseForm{
     abstract protected function getButtons(Player $player) : array;
 
     protected function getContent(Player $player) : string{
-        return "";
+        return '';
     }
 
     protected function onClick(Player $player, int $button, mixed $value) : void{

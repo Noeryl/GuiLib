@@ -17,8 +17,8 @@ abstract class Bossbar{
         if(self::get($player) !== null){
             self::remove($player);
         }
-
         self::$players[$player->getName()] = $bossbar->getName();
+
         $packet = new BossEventPacket();
         $packet->bossActorUniqueId = $player->getId();
         $packet->eventType = BossEventPacket::TYPE_SHOW;

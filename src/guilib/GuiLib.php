@@ -18,15 +18,21 @@ use guilib\bossbar\Bossbar;
 use guilib\inventory\CustomInventory;
 use guilib\inventory\BlockInventory;
 use guilib\inventory\EntityInventory;
-use guilib\inventory\InventoryTickTask;
+use function rmdir;
 
 final class GuiLib extends PluginBase implements Listener{
 
-    protected function onEnable() : void{
-        $this->getServer()->getPluginManager()->registerEvents($this, $this);
-        $this->getScheduler()->scheduleRepeatingTask(new InventoryTickTask(), 1);
+    protected function onLoad() : void{
+        rmdir($this->getDataFolder());
     }
 
+    protected function onEnable() : void{
+        $this->getServer()->getPluginManager()->registerEvents($this, $this);
+    }
+
+    /**
+     * @priority LOWEST
+     */
     public function onPlayerJoin(PlayerJoinEvent $event) : void{
         $player = $event->getPlayer();
 
@@ -44,6 +50,9 @@ final class GuiLib extends PluginBase implements Listener{
         });
     }
 
+    /**
+     * @priority LOWEST
+     */
     public function onPlayerQuit(PlayerQuitEvent $event) : void{
         $player = $event->getPlayer();
 

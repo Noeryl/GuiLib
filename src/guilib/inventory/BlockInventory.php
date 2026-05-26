@@ -23,17 +23,17 @@ abstract class BlockInventory extends CustomInventory implements PMBlockInventor
     use BlockInventoryTrait;
 
     /** @var Vector3[] */
-    private array $chestPositions = [];
+    private array $chestPos = [];
 
     public function __construct(int $size, Player $player){
         parent::__construct($size);
-        $chestPosition = $player->getPosition()->floor()->subtract(0, 3, 0);
-        $this->holder = Position::fromObject($chestPosition, $player->getWorld());
+        $chestPos = $player->getPosition()->floor()->subtract(0, 3, 0);
+        $this->holder = Position::fromObject($chestPos, $player->getWorld());
 
         $session = $player->getNetworkSession();
         $chestId = $session->getTypeConverter()->getBlockTranslator()->internalIdToNetworkId(VanillaBlocks::CHEST()->getStateId());
         $packet = new UpdateBlockPacket();
-        $packet->blockPosition = $blockPosition = BlockPosition::fromVector3($chestPosition);
+        $packet->blockPosition = $blockPosition = BlockPosition::fromVector3($chestPos);
         $packet->blockRuntimeId = $chestId;
         $session->sendDataPacket($packet);
 
@@ -42,22 +42,22 @@ abstract class BlockInventory extends CustomInventory implements PMBlockInventor
         $packet->nbt = new CacheableNbt(CompoundTag::create()->setString(Nameable::TAG_CUSTOM_NAME, $this->getTitle()));
         $session->sendDataPacket($packet);
 
-        $this->chestPositions[strtolower($player->getName())] = $chestPosition;
+        $this->chestPos[strtolower($player->getName())] = $chestPos;
     }
 
     final public function onClose(Player $who) : void{
         parent::onClose($who);
         $this->close($who);
-        $chestPosition = $this->chestPositions[$name = strtolower($who->getName())];
+        $chestPos = $this->chestPos[$name = strtolower($who->getName())];
 
         $session = $who->getNetworkSession();
-        $blockId = $who->getWorld()->getBlockAt($chestPosition->x, $chestPosition->y, $chestPosition->z)->getStateId();
+        $blockId = $who->getWorld()->getBlockAt($chestPos->x, $chestPos->y, $chestPos->z)->getStateId();
         $runtimeId = $session->getTypeConverter()->getBlockTranslator()->internalIdToNetworkId($blockId);
         $packet = new UpdateBlockPacket();
-        $packet->blockPosition = BlockPosition::fromVector3($chestPosition);
+        $packet->blockPosition = BlockPosition::fromVector3($chestPos);
         $packet->blockRuntimeId = $runtimeId;
         $session->sendDataPacket($packet);
 
-        unset($this->chestPositions[$name]);
+        unset($this->chestPos[$name]);
     }
 }

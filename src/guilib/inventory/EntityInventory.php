@@ -18,7 +18,7 @@ abstract class EntityInventory extends CustomInventory{
     private ?Entity $entity = null;
 
     final public function getTitle() : string{
-        return ($entity = $this->entity) !== null ? $entity->getNameTag() : "";
+        return ($entity = $this->entity) !== null ? $entity->getNameTag() : '';
     }
 
     final public function onClose(Player $who) : void{
@@ -38,10 +38,6 @@ abstract class EntityInventory extends CustomInventory{
         return $this;
     }
 
-    /**
-     * @internal
-     * @return Position
-     */
     final protected function getPosition() : Position{
         return ($entity = $this->entity) !== null ? $entity->getPosition() : Server::getInstance()->getWorldManager()->getDefaultWorld()->getSpawnLocation();
     }

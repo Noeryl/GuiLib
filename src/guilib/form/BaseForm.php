@@ -15,8 +15,8 @@ abstract class BaseForm implements Form{
 
     public function __construct(Player $player){
         $this->player = $player;
-        $this->data["type"] = $this->getType();
-        $this->data["title"] = $this->getTitle($player);
+        $this->data['type'] = $this->getType();
+        $this->data['title'] = $this->getTitle($player);
     }
 
     abstract protected function getType() : string;

@@ -11,8 +11,6 @@ use pocketmine\network\mcpe\protocol\types\inventory\WindowTypes;
 
 abstract class CustomInventory extends SimpleInventory{
 
-    private int $tick = -1;
-
     public function __construct(int $size){
         parent::__construct($size);
         $this->setContents($this->getContent());
@@ -30,24 +28,11 @@ abstract class CustomInventory extends SimpleInventory{
         $this->open($who);
     }
 
-    final public function onTick(int $tick) : void{
-        if($this->tick === $tick){
-            return;
-        }
-
-        $this->tick = $tick;
-        $this->tick($tick);
-    }
-
     public function open(Player $player) : void{
         //NOOP
     }
 
     public function close(Player $player) : void{
-        //NOOP
-    }
-
-    public function tick(int $tick) : void{
         //NOOP
     }
 

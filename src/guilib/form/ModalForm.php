@@ -2,23 +2,22 @@
 
 declare(strict_types = 1);
 
-namespace guilib\form\types;
+namespace guilib\form;
 
 use pocketmine\player\Player;
-use guilib\form\BaseForm;
 use function is_bool;
 
 abstract class ModalForm extends BaseForm{
 
     public function __construct(Player $player){
         parent::__construct($player);
-        $this->data["content"] = $this->getContent($player);
-        $this->data["button1"] = $this->getButtons($player)[0] ?? "null";
-        $this->data["button2"] = $this->getButtons($player)[1] ?? "null";
+        $this->data['content'] = $this->getContent($player);
+        $this->data['button1'] = $this->getButtons($player)[0] ?? 'null';
+        $this->data['button2'] = $this->getButtons($player)[1] ?? 'null';
     }
 
     final protected function getType() : string{
-        return "modal";
+        return 'modal';
     }
 
     final public function handleResponse(Player $player, mixed $data) : void{

@@ -19,19 +19,19 @@ abstract class Scoreboard{
         if(self::get($player) !== null){
             self::remove($player);
         }
-
         self::$players[$player->getName()] = $scoreboard->getName();
+
         $packet = new SetDisplayObjectivePacket();
-        $packet->displaySlot = "sidebar";
+        $packet->displaySlot = 'sidebar';
         $packet->objectiveName = $scoreboard->getName();
         $packet->displayName = $scoreboard->getTitle($player);
-        $packet->criteriaName = "dummy";
+        $packet->criteriaName = 'dummy';
         $packet->sortOrder = 0;
         $player->getNetworkSession()->sendDataPacket($packet);
 
         $score = 0;
         foreach($scoreboard->getLines($player) as $line){
-            if($line === ""){
+            if($line === ''){
                 continue;
             }
 
